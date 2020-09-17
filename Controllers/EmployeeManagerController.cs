@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManager.Mvc.Models;
@@ -54,6 +55,45 @@ namespace EmployeeManager.Mvc.Controllers
             }
             return View(model);
         }
+
+        public IActionResult Update(int id) 
+        {
+            FillCountries();
+            Employee model = db.Employees.Find(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Employee model)
+        {
+            FillCountries();
+            if(ModelState.IsValid)
+            {
+                db.Employees.Update(model);
+                db.SaveChanges();
+                ViewBag.Message = "Employee updated successfully";
+            }
+            return View(model);
+        }
+
+        [ActionName("Delete")]
+        public IActionResult ConfirmDelete(int id)
+        {
+            Employee model = db.Employees.Find(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int employeeID) 
+        {
+            Employee model = db.Employees.Find(employeeID);
+            db.Employees.Remove(model);
+            db.SaveChanges();
+            TempData["Message"] = "Employee deleted succesfully";
+            return RedirectToAction("List");
+        }
+
+
         
         public IActionResult Index()
         {
