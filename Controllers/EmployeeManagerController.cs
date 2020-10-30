@@ -4,11 +4,13 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManager.Mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeManager.Mvc.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class EmployeeManagerController : Controller
     {
         private AppDbContext db = null;
@@ -29,6 +31,7 @@ namespace EmployeeManager.Mvc.Controllers
                                                ViewBag.Countries = countries;
         }
 
+        //[Authorize(Roles = "Manager")]
         public IActionResult List() 
         {
             List<Employee> model = (from e in db.Employees

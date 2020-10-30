@@ -38,6 +38,17 @@
         </main>
     </div>
 
+    @*Sign Out button displayed at the bottom of the page*@
+    <br />
+    <hr />
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h2>You are signed in as @User.Identity.Name</h2>
+        <form asp-controller="Security" asp-action="SignOut" method="post">
+            <button type="submit">Sign Out</button>
+        </form>
+    }
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - Employee Manager.Mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

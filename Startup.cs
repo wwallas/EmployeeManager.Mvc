@@ -32,10 +32,11 @@ namespace EmployeeManager.Mvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
             services.AddDbContext<AppDbContext>(
                     options => options.UseSqlServer(this.config.GetConnectionString("AppDb")));
 
-            services.AddDbContext<AppIdentityDbContext>(options =>options.UseSqlServer(this.config.GetConnectionString("AppDb")));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(this.config.GetConnectionString("AppDb")));
             services.AddIdentity<AppIdentityUser, AppIdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>();
             services.ConfigureApplicationCookie(opt =>
             {
@@ -59,8 +60,8 @@ namespace EmployeeManager.Mvc
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseHttpsRedirection();            
 
             app.UseRouting();
 
